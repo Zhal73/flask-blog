@@ -1,11 +1,9 @@
-<!DOCTYPE html>
-<html>
-<body>
-<h1>{{ title }}</h1>
-<h1>My First Heading</h1>
-<p>My first paragraph.</p>
-<p> this is login</p>
-<p>I am very good at this!!! (not)</p>
-<a href="../home">Home </a>
-</body>
-</html>
+{% extends "layout.html" %}
+{% block body_content %}
+    <a href="{{ url_for('home') }}"> Home Page <a>
+    <a href="{{ url_for('about') }}"> About Page </a>
+    <a href="{{ url_for('login') }}"> Login Page <a>
+    <a href="{{ url_for('register') }}"> Register Page </a>
+    <br>
+    <p1> Welcome to my first web app! </p1>
+{% endblock %}

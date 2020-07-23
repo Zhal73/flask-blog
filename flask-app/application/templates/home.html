@@ -1,5 +1,19 @@
-<!-- this is a very simple html file to demonstrate the template functionality -->
-<h1>{{ title }}</h1>
-<a href="../about">About<a>
-<a href="../login">Login<a>
-<a href="../register">Register<a>
+{% extends "layout.html" %}
+{% block body_content %}
+    <a href="{{ url_for('home') }}"> Home Page <a>
+    <a href="{{ url_for('about') }}"> About Page </a>
+    <a href="{{ url_for('login') }}"> Login Page <a>
+    <a href="{{ url_for('register') }}"> Register Page </a>
+    <br>
+
+    <p1> Welcome to my first web app! </p1>
+
+    {% for post in posts %}
+        <div>
+            <h3>{{ post.title }}</h3>
+            <p><b> - First name:</b>{{ post.name.first }}</p>
+            <p><b> - Last name:</b>{{ post.name.last }}</p>
+            <p> -- {{ post.content }}</p>
+        </div>
+    {% endfor %}
+{% endblock %}
