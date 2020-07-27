@@ -1,7 +1,7 @@
 #class FlaskForm to create a Form
 from flask_wtf import FlaskForm
 #WTForm field type
-from wtforms import StringField, SubmitField, PasswordField
+from wtforms import StringField, SubmitField, PasswordField, BooleanField
 #WTForm validators
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 #Import the User class we defined in models.py
@@ -63,3 +63,21 @@ class RegistrationForm(FlaskForm):
 
         if user:
             raise ValidationError('Email already in use')
+
+#Form for an user to login to the website
+class LoginForm(FlaskForm):
+    email = StringField('Email',
+        validators=[
+            DataRequired(),
+            Email()
+        ]
+    )
+
+    password = PasswordField('Password',
+        validators=[
+            DataRequired()
+        ]
+    )
+
+    remember = BooleanField('Remember Me')
+    submit = SubmitField('Login')

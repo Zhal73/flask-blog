@@ -1,4 +1,6 @@
 from application import db
+from application import login_manager
+from flask_login import UserMixin
 
 #create a table Posts
 class Posts(db.Model):
@@ -15,8 +17,13 @@ class Posts(db.Model):
             'Title: ', self.title, '\r\n', self.content
             ])
 
+
+@login_manager.user_loader
+def load_user(id):
+    return Users.query.get(int(id))        
+
 #creates a table Users
-class Users(db.Model):
+class Users(db.Model,UserMixin): #we need to subclass UserMixin or we get the error  'Users' object has no attribute 'is_active'
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(500), nullable=False, unique=True)
     password = db.Column(db.String(500), nullable=False)
