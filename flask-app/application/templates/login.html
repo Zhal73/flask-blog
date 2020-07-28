@@ -1,4 +1,4 @@
-{% extends 'layout.html' %}
+{# {% extends 'layout.html' %} #}
 {% block body_content %}
     <h1>Login Page</h1>
     <p>Please Login to your account.</p>
@@ -37,5 +37,10 @@
                 {{ form.submit }}
             </div>
         </form>
+    </div>
+    <div>
+	    <br><br>
+	    <a href=" {{ url_for('register') }}">No Account? Register! </a>
+	    <br>
     </div>
 {% endblock %}

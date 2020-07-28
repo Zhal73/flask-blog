@@ -6,11 +6,13 @@ from flask import render_template, redirect, url_for, request
 
 @app.route('/')
 @app.route('/home')
+@login_required
 def home():
     postData = Posts.query.all()
     return render_template('home.html', title='Home', posts=postData)
 
 @app.route('/about')
+@login_required
 def about():
     return render_template('about.html',title='About')
 
