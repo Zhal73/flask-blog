@@ -82,7 +82,7 @@ def logout():
     logout_user()
     return redirect(url_for('login'))
 
-#define the rout for the page to chenge user details
+#defines the route for the page to chenge user details
 @app.route("/account", methods=['GET', 'POST'])
 def account():
     form = UpdateAccountForm() #import the form
@@ -99,3 +99,22 @@ def account():
         form.last_name.data = current_user.last_name
         form.email.data = current_user.email
     return render_template('account.html', title='Account', form=form)
+
+#delete an user from the database
+@app.route("/account/delete", methods=["GET", "POST"])
+@login_required
+def account_delete():
+    user = current_user.id  #gets the id of the user currently logged in
+    account = Users.query.filter_by(id=user).first() #retrieves the corresponding record from the database
+    posts_to_delete = Posts.query.filter_by(user_id = user).all() #retireves all the posts from the user
+    
+    #deletes each post
+    for post in posts_to_delete:
+        db.session.delete(post)
+
+    logout_user() # logs the user out
+    db.session.delete(account)
+    db.session.commit()
+    return redirect(url_for('register')) #redirects. No reder template returned
+
+
