@@ -6,44 +6,6 @@
 	<!-- the form -->    
         <form method='POST' action=''>
             {{ form.hidden_tag() }}  <!-- prevent CSRF attack -->		
-       	    <!-- first_name.label is the text displayed on the screen next to the text box --> 
-            {{ form.first_name.label }}
-	    <!-- first_name is the input field, a text box in this case --> 
-            {{ form.first_name }}
-	    <!-- checks for error in the input of the first name note: the variable form is create in routes.py-->
-	    <!-- validation parameters are in forms.py -->
-	    {% if form.first_name.errors %}
-	    <!-- surround the displayed errors in a error div tag, this can then be styled later to be red etc. -->
-		    <div class="error">
-               		<!-- for each error in the errors for the first_name input field -->
-                	{% for error in form.first_name.errors %}
-                    	 	<!-- display the error -->
-                   	 	<span>{{ error }}</span>
-                	<!-- end the for-loop -->
-               		{% endfor %}
-           	    </div>
-	     <!-- end the if statement -->
-             {% endif %}
-
-
-	
-            <br>
-            {{ form.last_name.label }}
-            {{ form.last_name }}
-            {% if form.last_name.errors %}
-            <!-- surround the displayed errors in a error div tag, this can then be styled later to be red etc. -->
-                    <div class="error">
-                        <!-- for each error in the errors for the last_name input field -->
-                        {% for error in form.last_name.errors %}
-                                <!-- display the error -->
-                                <span>{{ error }}</span>
-                        <!-- end the for-loop -->
-                        {% endfor %}
-                    </div>
-             <!-- end the if statement -->
-             {% endif %}
-
-
             <br>
             {{ form.title.label }}
             {{ form.title }}

@@ -9,18 +9,6 @@ from application.models import Users
 
 #Form to insert a post on the db
 class PostForm(FlaskForm):
-    first_name = StringField('First Name',
-        validators = [
-            DataRequired(),
-            Length(min=2, max=30)
-        ]
-    )
-    last_name = StringField('Last Name',
-        validators = [
-            DataRequired(),
-            Length(min=2, max=30)
-        ]
-    )
     title = StringField('Title',
         validators = [
             DataRequired(),
@@ -37,6 +25,18 @@ class PostForm(FlaskForm):
 
 #Form to insert a new user in the db --- Registration form
 class RegistrationForm(FlaskForm):
+    first_name = StringField('First Name',
+        validators = [
+            DataRequired(),
+            Length(min=2, max=30)
+        ]
+    )
+    last_name = StringField('Last Name',
+        validators = [
+            DataRequired(),
+            Length(min=2, max=30)
+        ]
+    )
     email = StringField('Email',
         validators = [
             DataRequired(),
