@@ -1,7 +1,7 @@
 from application import app, db, bcrypt
 from flask_login import login_user, current_user, logout_user, login_required
 from application.models import Posts, Users
-from application.forms import PostForm, RegistrationForm, LoginForm
+from application.forms import PostForm, RegistrationForm, LoginForm, UpdateAccountForm
 from flask import render_template, redirect, url_for, request
 
 @app.route('/')
@@ -9,7 +9,7 @@ from flask import render_template, redirect, url_for, request
 @login_required
 def home():
     postData = Posts.query.all()
-    return render_template('home.html', title='Home', posts=postData)
+    return render_template('home.html',name=current_user.first_name, title='Home', posts=postData)
 
 @app.route('/about')
 @login_required
@@ -81,3 +81,21 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('login'))
+
+#define the rout for the page to chenge user details
+@app.route("/account", methods=['GET', 'POST'])
+def account():
+    form = UpdateAccountForm() #import the form
+    #if the form submitted fine
+    if form.validate_on_submit():
+        current_user.first_name = form.first_name.data
+        current_user.last_name = form.last_name.data
+        current_user.email = form.email.data
+        db.session.commit()
+        return redirect(url_for('home'))
+    #else return the existing User's informations
+    elif request.method == 'GET':
+        form.first_name.data = current_user.first_name
+        form.last_name.data = current_user.last_name
+        form.email.data = current_user.email
+    return render_template('account.html', title='Account', form=form)
