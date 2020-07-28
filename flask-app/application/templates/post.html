@@ -5,6 +5,7 @@
     <div class="form_group">
 	<!-- the form -->    
         <form method='POST' action=''>
+            {{ form.hidden_tag() }}  <!-- prevent CSRF attack -->		
        	    <!-- first_name.label is the text displayed on the screen next to the text box --> 
             {{ form.first_name.label }}
 	    <!-- first_name is the input field, a text box in this case --> 
