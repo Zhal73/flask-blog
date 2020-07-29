@@ -6,13 +6,14 @@ from flask import render_template, redirect, url_for, request
 
 @app.route('/')
 @app.route('/home')
-@login_required
 def home():
-    postData = Posts.query.all()
-    return render_template('home.html',name=current_user.first_name, title='Home', posts=postData)
+    if current_user.is_authenticated:
+        postData = Posts.query.all()
+        return render_template('home.html',name=current_user.first_name, title='Home', posts=postData)
+    else:
+        return render_template('home.html', title='Home')
 
 @app.route('/about')
-@login_required
 def about():
     return render_template('about.html',title='About')
 
@@ -78,12 +79,14 @@ def login():
 
 #once the user is logged out it is redirected to the login page.
 @app.route("/logout")
+@login_required
 def logout():
     logout_user()
     return redirect(url_for('login'))
 
 #defines the route for the page to chenge user details
 @app.route("/account", methods=['GET', 'POST'])
+@login_required
 def account():
     form = UpdateAccountForm() #import the form
     #if the form submitted fine

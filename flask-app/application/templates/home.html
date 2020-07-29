@@ -2,7 +2,7 @@
 {% block body_content %}
     <h1>This is the best Home Page EVERRRRRR!!!!</h1>
     <p1> Welcome {{ name }} to my first web app! </p1>
-
+	{% if name %}
   	  {% for post in posts %}
        		 <div>
         	    <h3>{{ post.title }}</h3>
@@ -11,6 +11,7 @@
 		    <p> -- {{ post.content }}</p>	
 		</div>
   	  {% endfor %}
+	{% endif %}
  
 	
 	
