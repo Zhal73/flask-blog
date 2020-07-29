@@ -10,3 +10,4 @@ Flask-Login==0.5.0
 pytest==6.0.0
 pytest-cov==2.10.0
 Werkzeug==0.16.1
+selenium==3.141.0
