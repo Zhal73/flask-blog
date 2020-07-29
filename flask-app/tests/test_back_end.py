@@ -63,7 +63,7 @@ class TestViews(TestBase):
         # user to be logged in
 
         response = self.client.get(url_for('home')) #call the home page
-        self.assertEqual(response.status_code, 200) #checks it it is accessible. code : 200
+        self.assertEqual(response.status_code, 200) #checks if it is accessible. code : 200
 
     def test_add_new_post(self):
         # this tests that once a user posts a new post,
@@ -83,3 +83,14 @@ class TestViews(TestBase):
                 follow_redirects=True   # follows the redirecton
             )
             self.assertIn(b'Test Title', response.data) # Checks it the "Test Title" we posted is in the home page
+
+    def test_about_page_view(self):
+        # this tests that the abouit page can be
+        # seen by anyone without the needs
+        # to be logged in
+        response = self.client.get(url_for('about')) #calls the about page
+        self.assertEqual(response.status_code, 200) #checks if it is accessible, code: 200
+
+    def test_post_page_access(self):
+        response = self.client.get(url_for('post')) #call the post page
+        self.assertEqual(response.status_code, 200) #checks if it is accessible. code : 200
