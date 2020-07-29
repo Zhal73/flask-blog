@@ -91,6 +91,18 @@ class TestViews(TestBase):
         response = self.client.get(url_for('about')) #calls the about page
         self.assertEqual(response.status_code, 200) #checks if it is accessible, code: 200
 
-    def test_post_page_access(self):
+    def test_post_page_access_not_log(self):
+        # this test that if a not logged-in
+        # uset wants to access post
+        # is sent to the login page
         response = self.client.get(url_for('post')) #call the post page
-        self.assertEqual(response.status_code, 200) #checks if it is accessible. code : 200
+        self.assertIn(b'login', response.data) # Checks if the we get the login page
+
+    def test_post_page_access_logged(self):
+        # this test that if a not logged-in
+        # uset wants to access post
+        # is sent to the login page
+        self.client.post(url_for('login'), data = dict(email = "admin@admin.com", password="admin2016"), follow_redirects = True)
+
+        response = self.client.get(url_for('post')) #call the post page
+        self.assertIn(b'Post', response.data) # Checks if get the post page
