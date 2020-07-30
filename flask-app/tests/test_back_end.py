@@ -106,3 +106,39 @@ class TestViews(TestBase):
 
         response = self.client.get(url_for('post')) #call the post page
         self.assertIn(b'Post', response.data) # Checks if get the post page
+
+    def test_register(self):
+        # this test checks if is possible to 
+        # register as new user
+        with self.client:
+            resp=self.client.post(url_for('register'),data = dict(first_name="domen", last_name="gagli", email="dddd@gmail.com", password="1234",confirm_password="1234"),follow_redirects = True)
+            #self.assertRedirects(resp.data,url_for('login'))
+            self.assertIn(b'Login Page', resp.data)
+
+    def test_account(self):
+        # test it the account page is loaded correctly
+
+        # first login the user
+        self.client.post(url_for('login'), data = dict(email = "admin@admin.com", password="admin2016"), follow_redirects = True)
+        response = self.client.get(url_for('account'))
+        self.assertIn(b'admin', response.data)
+
+    def test_account_modification(self):
+        # this tests if the once the account is modified
+        # by changing the first
+        # the user is redirected to the home page
+        # and the new name appears in the homepage
+
+        # first login the user
+        self.client.post(url_for('login'), data = dict(email = "admin@admin.com", password="admin2016"), follow_redirects = True)
+        with self.client:
+            resp=self.client.post(url_for('account'), data = dict(first_name="domen", last_name="gagli", email="dddd@gmail.com"),follow_redirects = True)
+            self.assertIn(b'domen', resp.data)
+    
+    def test_logout(self):
+        # this tests if after logged out
+        # a the user is redirect to the login page
+        self.client.post(url_for('login'), data = dict(email = "admin@admin.com", password="admin2016"), follow_redirects = True)
+        rv = self.client.get('logout',follow_redirects=True)
+        self.assertIn(b'Login Page', rv.data)
+
