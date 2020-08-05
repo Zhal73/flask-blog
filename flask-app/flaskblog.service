@@ -1,0 +1,11 @@
+[Unit]
+Description=FlaskBlog Service
+
+[Service]
+User=jenkins
+WorkingDirectory=/var/lib/jenkins/workspace/FlaskBlog/flask-app
+ExecStart=/bin/sh -c 'cd  gunicorn --workers=4 --bind=0.0.0.0:5000 application:app && \
+	. ./venv/bin/activate && \
+	gunicorn --workers=4 --bind=0.0.0.0:5000 application:app'
+[Install]
+WantedBy=multi-user.target
